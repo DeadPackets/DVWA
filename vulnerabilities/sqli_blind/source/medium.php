@@ -23,8 +23,7 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 					$result = mysqli_stmt_get_result($stmt);
 				}
 			} catch (Exception $e) {
-				print "There was an error.";
-				exit;
+				$result = false;
 			}
 
 			$exists = false;
@@ -56,6 +55,11 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 		// Feedback for end user
 		$html .= '<pre>User ID exists in the database.</pre>';
 	} else {
+		// Might sleep a random amount
+		if( rand( 0, 5 ) == 3 ) {
+			sleep( rand( 2, 4 ) );
+		}
+
 		// Feedback for end user
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}

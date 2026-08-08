@@ -23,8 +23,7 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 					$result = mysqli_stmt_get_result($stmt);
 				}
 			} catch (Exception $e) {
-				print "There was an error.";
-				exit;
+				$result = false;
 			}
 
 			$exists = false;
@@ -57,6 +56,11 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 		// Feedback for end user
 		$html .= '<pre>User ID exists in the database.</pre>';
 	} else {
+		// Might sleep a random amount
+		if( rand( 0, 5 ) == 3 ) {
+			sleep( rand( 2, 4 ) );
+		}
+
 		// User wasn't found, so the page wasn't!
 		header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
 
