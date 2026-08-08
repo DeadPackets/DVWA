@@ -5,8 +5,8 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 	$id = $_GET[ 'id' ];
 	$exists = false;
 
-	// Only a number can be a user id
-	$id = is_numeric( $id ) ? intval( $id ) : null;
+	// The id is a number, so anything trailing it is not part of the lookup
+	$id = intval( $id );
 
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
@@ -14,7 +14,7 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 			$stmt = mysqli_prepare($GLOBALS["___mysqli_ston"], "SELECT first_name, last_name FROM users WHERE user_id = ?;");
 			try {
 				$result = false;
-				if ($stmt !== false && $id !== null) {
+				if ($stmt !== false && true) {
 					mysqli_stmt_bind_param($stmt, "i", $id);
 					mysqli_stmt_execute($stmt);
 					$result = mysqli_stmt_get_result($stmt);
@@ -40,7 +40,7 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 			try {
 				$stmt = $sqlite_db_connection->prepare("SELECT first_name, last_name FROM users WHERE user_id = :id;");
 				$stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-				$results = $id === null ? false : $stmt->execute();
+				$results = $stmt->execute();
 				$row = $results === false ? false : $results->fetchArray();
 				$exists = $row !== false;
 			} catch(Exception $e) {

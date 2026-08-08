@@ -5,8 +5,8 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 	$id = $_COOKIE[ 'id' ];
 	$exists = false;
 
-	// Only a number can be a user id
-	$id = is_numeric( $id ) ? intval( $id ) : null;
+	// The id is a number, so anything trailing it is not part of the lookup
+	$id = intval( $id );
 
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
@@ -14,7 +14,7 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 			$stmt = mysqli_prepare($GLOBALS["___mysqli_ston"], "SELECT first_name, last_name FROM users WHERE user_id = ? LIMIT 1;");
 			try {
 				$result = false;
-				if ($stmt !== false && $id !== null) {
+				if ($stmt !== false && true) {
 					mysqli_stmt_bind_param($stmt, "i", $id);
 					mysqli_stmt_execute($stmt);
 					$result = mysqli_stmt_get_result($stmt);
@@ -41,7 +41,7 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 			try {
 				$stmt = $sqlite_db_connection->prepare("SELECT first_name, last_name FROM users WHERE user_id = :id LIMIT 1;");
 				$stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-				$results = $id === null ? false : $stmt->execute();
+				$results = $stmt->execute();
 				$row = $results === false ? false : $results->fetchArray();
 				$exists = $row !== false;
 			} catch(Exception $e) {
