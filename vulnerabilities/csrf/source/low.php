@@ -1,8 +1,10 @@
 <?php
 
 if( isset( $_GET[ 'Change' ] ) ) {
-	// Check Anti-CSRF token
-	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+	// Check Anti-CSRF token. A missing token is an invalid one, not a PHP warning whose
+	// output stops checkToken's redirect from being sent.
+	$user_token = isset( $_REQUEST[ 'user_token' ] ) ? $_REQUEST[ 'user_token' ] : '';
+	checkToken( $user_token, $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Get input
 	$pass_new  = $_GET[ 'password_new' ];
