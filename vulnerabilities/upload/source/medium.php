@@ -34,8 +34,6 @@ if( isset( $_POST[ 'Upload' ] ) ) {
 			}
 			$saved = ( $img !== false ) && imagepng( $img, $target_path, 9 );
 		}
-		if( $img !== false )
-			imagedestroy( $img );
 
 		// Could we write the file to the upload folder?
 		if( !$saved ) {
