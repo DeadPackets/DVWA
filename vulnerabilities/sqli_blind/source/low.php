@@ -5,7 +5,7 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 	checkToken( $_REQUEST[ 'user_token' ] ?? '', $_SESSION[ 'session_token' ] ?? null, 'index.php' );
 
 	// Get input
-	$id = $_GET[ 'id' ];
+	$id = $_GET[ 'id' ] ?? '';
 	$exists = false;
 
 	// The id is a number, so anything trailing it is not part of the lookup
