@@ -1,11 +1,11 @@
 <?php
 
-if( isset( $_GET[ 'Login' ] ) ) {
+if( isset( $_POST[ 'Login' ] ) ) {
 	// Get username
-	$user = $_GET[ 'username' ];
+	$user = $_POST[ 'username' ];
 
 	// Get password
-	$pass = $_GET[ 'password' ];
+	$pass = $_POST[ 'password' ];
 	$pass = md5( $pass );
 
 	// Default values
