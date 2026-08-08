@@ -1,6 +1,9 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ] ?? '', $_SESSION[ 'session_token' ] ?? null, 'index.php' );
+
 	// Get input
 	$id = $_POST[ 'id' ];
 	$exists = false;
@@ -57,5 +60,8 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>
