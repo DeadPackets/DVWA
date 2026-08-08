@@ -1,6 +1,9 @@
 <?php
 
 if( isset( $_POST[ 'Login' ] ) ) {
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ] ?? '', $_SESSION[ 'session_token' ] ?? null, 'index.php' );
+
 	// Get username
 	$user = $_POST[ 'username' ];
 
@@ -75,5 +78,8 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$data->bindParam( ':user', $user, PDO::PARAM_STR );
 	$data->execute();
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>
