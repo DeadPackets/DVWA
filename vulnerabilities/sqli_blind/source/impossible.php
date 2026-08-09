@@ -1,12 +1,12 @@
 <?php
 
-if( isset( $_POST[ 'Submit' ] ) ) {
+if( isset( $_GET[ 'Submit' ] ) ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 	$exists = false;
 
 	// Get input
-	$id = $_POST[ 'id' ];
+	$id = $_GET[ 'id' ];
 
 	// Was a number entered?
 	if(is_numeric( $id )) {
